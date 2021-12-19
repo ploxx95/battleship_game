@@ -9,9 +9,10 @@ export const ConfigGame = () => {
   const { boardGenReducer } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   return (
     <Formik
-      initialValues={{ nickname: "", numberShifts: 0, difficult: "" }}
+      initialValues={{ nickname: "", numberShifts: 0, difficult: 0 }}
       validationSchema={Yup.object({
         numberShifts: Yup.number()
           .max(100)
@@ -23,7 +24,16 @@ export const ConfigGame = () => {
           .required("Required"),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        dispatch(configGame({ data: values }));
+        dispatch(
+          configGame({
+            data: {
+              nickname: values.nickname,
+              numberShifts: values.numberShifts
+                ? values.numberShifts
+                : values.difficult,
+            },
+          })
+        );
         navigate(`start`);
         setSubmitting(false);
       }}
@@ -34,7 +44,7 @@ export const ConfigGame = () => {
           <Field name="nickname" type="text" />
           <ErrorMessage name="nickname" />
 
-          <label htmlFor="numberShifts">Last Name</label>
+          <label htmlFor="numberShifts">Number of Shifts</label>
           <Field name="numberShifts" type="number" />
           <ErrorMessage name="numberShifts" />
 
@@ -45,7 +55,7 @@ export const ConfigGame = () => {
               <Field
                 type="radio"
                 name="difficult"
-                value="facil"
+                value={999}
                 onClick={() => setFieldValue("numberShifts", 0)}
               />
               Facil
@@ -54,7 +64,7 @@ export const ConfigGame = () => {
               <Field
                 type="radio"
                 name="difficult"
-                value="medio"
+                value={100}
                 onClick={() => setFieldValue("numberShifts", 0)}
               />
               Medio
@@ -63,12 +73,17 @@ export const ConfigGame = () => {
               <Field
                 type="radio"
                 name="difficult"
-                value="dificil"
+                value={50}
                 onClick={() => setFieldValue("numberShifts", 0)}
               />
               Dificil
             </label>
-            <div>Picked: {values.difficult}</div>
+            <div>
+              Picked:{" "}
+              {values.numberShifts === 0
+                ? values.difficult
+                : values.numberShifts}
+            </div>
           </div>
 
           <button type="submit">Submit</button>

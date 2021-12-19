@@ -1,10 +1,10 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { dataGame } from "../actions/gameMode";
+import { initDataGame } from "../actions/gameMode";
 
-const gameData = createReducer([], (builder) => {
-  builder.addCase(dataGame.toString(), (state, action) => {
-    const gameInfo = action.payload.data;
-    return [...state, gameInfo];
+const gameData = createReducer({}, (builder) => {
+  builder.addCase(initDataGame.toString(), (state, action) => {
+    const data_game = action.payload;
+    return data_game;
   });
 });
 

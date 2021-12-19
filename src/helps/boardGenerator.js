@@ -1,17 +1,17 @@
 export function initialBoard() {
   let row = [];
   let column = [];
-  let arrCoordinatesOrder;
+  let arrcoordinateShips;
   let arrOfShips = shipsRandomCoord();
 
   for (let r = 0; r <= 9; r++) {
     column = [];
     for (let c = 0; c <= 9; c++) {
-      arrCoordinatesOrder = arrOfShips
+      arrcoordinateShips = arrOfShips
         .map((ship) => ship.coord)
         .sort((a, b) => a - b);
       let coordBoard = parseInt(`${c}${r}`);
-      if (arrCoordinatesOrder.flat().includes(coordBoard)) {
+      if (arrcoordinateShips.flat().includes(coordBoard)) {
         let box = {
           coordinate: coordBoard,
           status: "red",
@@ -27,24 +27,24 @@ export function initialBoard() {
     }
     row.push(column);
   }
-  console.log(arrCoordinatesOrder);
-  return { row, arrCoordinatesOrder };
+  console.log(arrcoordinateShips);
+  return { row, arrcoordinateShips };
 }
 
 function shipsRandomCoord() {
-  const coordShips = [];
+  const arrcoordShips = [];
   const ShipsInfo = [];
   let ShipLength = 3;
   let numberOfShips = 10;
-  while (coordShips.length <= numberOfShips - 1) {
+  while (arrcoordShips.length < numberOfShips) {
     if (ShipLength < 0) {
       ShipLength = 3;
     }
     let randomCord = coordRandom(ShipLength);
-    let ifNotRepeatCoord = notRepeatCoords(coordShips, randomCord);
+    let ifNotRepeatCoord = notRepeatCoords(arrcoordShips, randomCord);
     if (ifNotRepeatCoord) {
       ShipsInfo.push({ coord: randomCord, ShipLength: ShipLength + 1 });
-      coordShips.push(randomCord);
+      arrcoordShips.push(randomCord);
       ShipLength--;
     }
   }
