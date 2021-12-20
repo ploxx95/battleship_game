@@ -15,13 +15,19 @@ export default function BoardGrid() {
       <div className="board">
         {boardGenReducer.map((row) =>
           row.map((col) => (
-            <Box key={col.coordinate} ship={col?.status}>
+            <Box
+              key={col.coordinate}
+              status={col?.status}
+              coordinate={col.coordinate}
+            >
               {col?.coordinate}
             </Box>
           ))
         )}
       </div>
-      <div className="bg-red-600 bg-slate-600"> </div>
+      <div className="bg-red-500 bg-green-500 bg-slate-500 bg-purple-500 bg-yellow-500 ">
+        {" "}
+      </div>
     </>
   );
 }

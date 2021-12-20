@@ -14,13 +14,21 @@ export function initialBoard() {
       if (arrcoordinateShips.flat().includes(coordBoard)) {
         let box = {
           coordinate: coordBoard,
-          status: "red",
+          status: {
+            ship: true,
+            fired: false,
+            status: true,
+            isdead: false,
+          },
         };
         column.push(box);
       } else {
         let box = {
           coordinate: coordBoard,
-          status: "vacio",
+          status: {
+            ship: false,
+            fired: false,
+          },
         };
         column.push(box);
       }
